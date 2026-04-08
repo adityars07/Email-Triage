@@ -1,0 +1,59 @@
+﻿git : remote: [31m-------
+--------------------------
+--------------------------
+--------------[0m        
+At line:1 char:1
++ git push --force space 
+main 2>&1 | Out-File 
+-FilePath push_log.txt -E 
+...
++ ~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~
+    + CategoryInfo        
+      : NotSpecified: (r  
+  emote: [31m--...---   
+ [0m        :String) [    
+], RemoteException
+    + FullyQualifiedError 
+   Id : NativeCommandErr  
+  or
+ 
+remote: [31mSorry, your 
+push was rejected during 
+YAML metadata 
+verification: [0m        
+remote: [31m- Error: 
+"short_description" 
+length must be less than 
+or equal to 60 characters 
+long[0m        
+remote: ^[[31m------------
+--------------------------
+--------------------------
+---------[0m        
+remote: [32m-------------
+--------------------------
+--------------------------
+--------[0m        
+remote: [32mPlease find 
+the documentation at:[0m 
+       
+remote: [32mhttps://huggi
+ngface.co/docs/hub/model-c
+ards#model-card-metadata[
+0m        
+remote: [32m[0m        
+remote: [32m-------------
+--------------------------
+--------------------------
+--------[0m        
+To https://huggingface.co/
+spaces/adityars007/email-t
+riage
+ ! [remote rejected] main 
+-> main (pre-receive hook 
+declined)
+error: failed to push 
+some refs to 'https://hugg
+ingface.co/spaces/adityars
+007/email-triage'

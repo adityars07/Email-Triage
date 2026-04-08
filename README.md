@@ -7,7 +7,7 @@ sdk: docker
 app_port: 7860
 pinned: false
 license: mit
-short_description: OpenEnv environment for email classification, prioritization & reply generation
+short_description: AI email classification, priority & reply env
 ---
 
 # 📬 AI Email Triage & Response Environment
