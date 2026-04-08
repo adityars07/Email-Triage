@@ -1,0 +1,114 @@
+# ============================================================
+# OpenEnv Configuration — AI Email Triage & Response Environment
+# ============================================================
+
+environment:
+  name: "email_triage"
+  version: "1.0.0"
+  description: >
+    An AI training environment that simulates real-world email handling.
+    The agent processes incoming emails, classifies them as spam/ham,
+    assigns priority levels, and generates appropriate responses.
+  author: "Aditya RS"
+
+# --------------------------------------------------------------
+# Task Definitions
+# --------------------------------------------------------------
+tasks:
+  - name: "spam_detection"
+    difficulty: "easy"
+    description: "Classify emails as spam or ham (legitimate)."
+    action_space:
+      type: "categorical"
+      values: ["spam", "ham"]
+
+  - name: "priority_assignment"
+    difficulty: "medium"
+    description: "Assign priority to legitimate emails."
+    action_space:
+      type: "categorical"
+      values: ["low", "medium", "high", "critical"]
+
+  - name: "reply_generation"
+    difficulty: "hard"
+    description: "Generate an appropriate reply to the email."
+    action_space:
+      type: "text"
+      max_length: 1024
+
+# --------------------------------------------------------------
+# Observation Space
+# --------------------------------------------------------------
+observation_space:
+  email_id:
+    type: "string"
+    description: "Unique identifier for the email"
+  sender:
+    type: "string"
+    description: "Sender email address"
+  subject:
+    type: "string"
+    description: "Email subject line"
+  body:
+    type: "string"
+    description: "Full email body text"
+  timestamp:
+    type: "string"
+    description: "ISO 8601 timestamp"
+  metadata:
+    has_attachments:
+      type: "boolean"
+    is_reply:
+      type: "boolean"
+    thread_length:
+      type: "integer"
+
+# --------------------------------------------------------------
+# Reward Configuration
+# --------------------------------------------------------------
+rewards:
+  weights:
+    classification: 0.4
+    priority: 0.3
+    reply: 0.3
+
+  classification:
+    correct: 0.4
+    incorrect: -0.2
+    ham_as_spam_penalty: -0.3   # worse: blocks legitimate email
+    spam_as_ham_penalty: -0.2   # bad but less damaging
+
+  priority:
+    exact_match: 0.3
+    off_by_one: 0.15
+    incorrect: -0.15
+    critical_miss_penalty: -0.25  # missing critical is dangerous
+
+  reply:
+    max_score: 0.3
+    similarity_weight: 0.5      # TF-IDF cosine similarity
+    length_weight: 0.2          # appropriate length
+    professionalism_weight: 0.3 # greeting, sign-off, tone
+    empty_penalty: -0.15
+    nonsensical_penalty: -0.1
+
+# --------------------------------------------------------------
+# Episode Configuration
+# --------------------------------------------------------------
+episode:
+  max_steps_per_email: 3        # classify → prioritize → reply
+  timeout_seconds: 30
+  shuffle_emails: true
+
+# --------------------------------------------------------------
+# Evaluation
+# --------------------------------------------------------------
+evaluation:
+  num_episodes: 50
+  metrics:
+    - "classification_accuracy"
+    - "classification_f1"
+    - "priority_accuracy"
+    - "priority_weighted_f1"
+    - "reply_avg_similarity"
+    - "total_reward"
