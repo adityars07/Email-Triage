@@ -112,10 +112,17 @@ def get_observation_space():
     return api_env.observation_space
 
 
+from fastapi.responses import RedirectResponse
+
 @app.get("/health")
 def health_check():
     """Health check endpoint."""
     return {"status": "ok", "environment": "email_triage", "version": "1.0.0"}
+
+@app.get("/")
+def root():
+    """Redirect to the UI."""
+    return RedirectResponse(url="/ui")
 
 
 # ── Gradio UI ─────────────────────────────────────────────────────────────────
