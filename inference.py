@@ -10,9 +10,50 @@ Includes:
 import argparse
 import json
 import re
+import os
 from typing import Dict, List
+from openai import OpenAI
 
 from environment import EmailTriageEnv
+
+
+# ── LLM Agent ─────────────────────────────────────────────────────────────────
+
+class LLMAgent:
+    def __init__(self):
+        self.name = "LLMAgent"
+        self.client = OpenAI(
+            base_url=os.environ.get("API_BASE_URL", "https://api.openai.com/v1"),
+            api_key=os.environ.get("API_KEY", "dummy")
+        )
+
+    def act(self, observation: Dict) -> Dict[str, str]:
+        prompt = f'''You are an AI Email triage agent.
+Read the following email and output a JSON object with three keys:
+1. "classify": either "spam" or "ham"
+2. "priority": if ham, assign "low", "medium", "high", or "critical". if spam, assign "none".
+3. "reply": if ham, generate a short professional reply. if spam, return "".
+
+Email content:
+Sender: {observation.get('sender')}
+Subject: {observation.get('subject')}
+Body: {observation.get('body')}
+
+Output ONLY valid JSON.'''
+
+        try:
+            response = self.client.chat.completions.create(
+                model="gpt-4o",
+                messages=[{"role": "user", "content": prompt}]
+            )
+            content = response.choices[0].message.content
+            match = re.search(r'\{.*\}', content, re.DOTALL)
+            if match:
+                return json.loads(match.group(0))
+            return json.loads(content)
+        except Exception as e:
+            print(f"LLM Error: {e}")
+            return {"classify": "ham", "priority": "low", "reply": ""}
 
 
 # ── Rule-Based Agent ──────────────────────────────────────────────────────────
@@ -242,9 +283,9 @@ def main():
         help="Number of episodes to evaluate (default: 50)"
     )
     parser.add_argument(
-        "--agent", type=str, default="rule_based",
-        choices=["rule_based"],
-        help="Agent to use (default: rule_based)"
+        "--agent", type=str, default="llm",
+        choices=["rule_based", "llm"],
+        help="Agent to use (default: llm)"
     )
     parser.add_argument(
         "--output", type=str, default=None,
@@ -258,7 +299,9 @@ def main():
 
     env = EmailTriageEnv()
 
-    if args.agent == "rule_based":
+    if args.agent == "llm":
+        agent = LLMAgent()
+    else:
         agent = RuleBasedAgent()
 
     results = run_evaluation(
