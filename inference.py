@@ -181,8 +181,14 @@ def run_evaluation(
 
     for ep in range(num_episodes):
         obs = env.reset()
+        task_name = str(obs.get('email_id', f'task_{ep+1}'))
+        print(f"[START] task={task_name}", flush=True)
+
         action = agent.act(obs)
         obs_next, reward, done, info = env.step(action)
+
+        print(f"[STEP] step=1 reward={reward}", flush=True)
+        print(f"[END] task={task_name} score={reward} steps=1", flush=True)
 
         result = {
             "episode": ep + 1,
@@ -201,7 +207,8 @@ def run_evaluation(
                 f"  [{ep+1:3d}/{num_episodes}] {obs['email_id']:<12} | "
                 f"Class: {cls_icon}  Pri: {pri_icon}  "
                 f"Reply: {rep_score:+.3f}  | "
-                f"Total: {reward:+.4f}"
+                f"Total: {reward:+.4f}",
+                flush=True
             )
 
     metrics = env.get_metrics()
