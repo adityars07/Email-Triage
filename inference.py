@@ -23,8 +23,8 @@ class LLMAgent:
     def __init__(self):
         self.name = "LLMAgent"
         self.client = OpenAI(
-            base_url=os.environ.get("API_BASE_URL", "https://api.openai.com/v1"),
-            api_key=os.environ.get("API_KEY", "dummy")
+            base_url=os.environ["API_BASE_URL"],
+            api_key=os.environ["API_KEY"]
         )
 
     def act(self, observation: Dict) -> Dict[str, str]:
@@ -41,19 +41,16 @@ Body: {observation.get('body')}
 
 Output ONLY valid JSON.'''
 
-        try:
-            response = self.client.chat.completions.create(
-                model="gpt-4o",
-                messages=[{"role": "user", "content": prompt}]
-            )
-            content = response.choices[0].message.content
-            match = re.search(r'\{.*\}', content, re.DOTALL)
-            if match:
-                return json.loads(match.group(0))
-            return json.loads(content)
-        except Exception as e:
-            print(f"LLM Error: {e}")
-            return {"classify": "ham", "priority": "low", "reply": ""}
+        response = self.client.chat.completions.create(
+            model="gpt-3.5-turbo",
+            messages=[{"role": "user", "content": prompt}],
+            temperature=0.0
+        )
+        content = response.choices[0].message.content
+        match = re.search(r'\{.*\}', content, re.DOTALL)
+        if match:
+            return json.loads(match.group(0))
+        return json.loads(content)
 
 
 # ── Rule-Based Agent ──────────────────────────────────────────────────────────
