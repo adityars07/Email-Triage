@@ -238,33 +238,46 @@ def run_evaluation(
         task_name = str(obs.get('email_id', f'task_{ep+1}'))
         print(f"[START] task={task_name}", flush=True)
 
-        action = agent.act(obs)
-        obs_next, reward, done, info = env.step(action)
+        try:
+            action = agent.act(obs)
+            obs_next, reward, done, info = env.step(action)
+            clamped = clamp_score(reward)
+            
+            print(f"[STEP] step=1 reward={clamped}", flush=True)
+            print(f"[END] task={task_name} score={clamped} steps=1", flush=True)
 
-        clamped = clamp_score(reward)
-        print(f"[STEP] step=1 reward={clamped}", flush=True)
-        print(f"[END] task={task_name} score={clamped} steps=1", flush=True)
+            result = {
+                "episode": ep + 1,
+                "email_id": obs.get("email_id", "unknown"),
+                "reward": reward,
+                "info": info,
+            }
+            results.append(result)
 
-        result = {
-            "episode": ep + 1,
-            "email_id": obs["email_id"],
-            "reward": reward,
-            "info": info,
-        }
-        results.append(result)
+            if verbose:
+                cls_icon = "Y" if info.get("classification", {}).get("correct") else "N"
+                pri_icon = "Y" if info.get("priority", {}).get("correct") else "N"
+                rep_score = info.get("reply", {}).get("reward", 0.0)
 
-        if verbose:
-            cls_icon = "Y" if info.get("classification", {}).get("correct") else "N"
-            pri_icon = "Y" if info.get("priority", {}).get("correct") else "N"
-            rep_score = info.get("reply", {}).get("reward", 0.0)
-
-            print(
-                f"  [{ep+1:3d}/{num_episodes}] {obs['email_id']:<12} | "
-                f"Class: {cls_icon}  Pri: {pri_icon}  "
-                f"Reply: {rep_score:+.3f}  | "
-                f"Total: {reward:+.4f}",
-                flush=True
-            )
+                print(
+                    f"  [{ep+1:3d}/{num_episodes}] {obs.get('email_id', 'unknown'):<12} | "
+                    f"Class: {cls_icon}  Pri: {pri_icon}  "
+                    f"Reply: {rep_score:+.3f}  | "
+                    f"Total: {reward:+.4f}",
+                    flush=True
+                )
+        except Exception as e:
+            fallback_score = clamp_score(0.01)
+            print(f"[LLM ERROR] Task {task_name} failed: {e}", flush=True)
+            print(f"[STEP] step=1 reward={fallback_score}", flush=True)
+            print(f"[END] task={task_name} score={fallback_score} steps=1", flush=True)
+            
+            results.append({
+                "episode": ep + 1,
+                "email_id": obs.get("email_id", "unknown"),
+                "reward": 0.01,
+                "info": {"error": str(e)},
+            })
 
     metrics = env.get_metrics()
 
