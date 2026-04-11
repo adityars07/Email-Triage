@@ -23,13 +23,11 @@ class LLMAgent:
     def __init__(self):
         self.name = "LLMAgent"
         import os
-        base = os.environ.get("API_BASE_URL", "http://127.0.0.1:8000").rstrip("/")
-        if not base.startswith("http"):
-            base = "http://" + base
-        if not base.endswith("/v1"):
-            base = f"{base}/v1"
-        self.url = f"{base}/chat/completions"
-        self.api_key = os.environ.get("API_KEY", "dummy")
+        from openai import OpenAI
+        self.client = OpenAI(
+            base_url=os.environ["API_BASE_URL"],
+            api_key=os.environ["API_KEY"]
+        )
 
     def act(self, observation: Dict) -> Dict[str, str]:
         prompt = f'''You are an AI Email triage agent.
@@ -46,47 +44,24 @@ Body: {observation.get('body')}
 Output ONLY valid JSON.'''
 
         import json
-        import urllib.request
-        import urllib.error
         import re
 
-        payload = {
-            "model": "gpt-3.5-turbo",
-            "messages": [{"role": "user", "content": prompt}],
-            "temperature": 0.0
-        }
-        
-        headers = {
-            "Content-Type": "application/json",
-            "Authorization": f"Bearer {self.api_key}"
-        }
-
         try:
-            req = urllib.request.Request(
-                self.url,
-                data=json.dumps(payload).encode("utf-8"),
-                headers=headers,
-                method="POST"
+            response = self.client.chat.completions.create(
+                model="gpt-3.5-turbo",
+                messages=[{"role": "user", "content": prompt}],
+                temperature=0.0
             )
-            with urllib.request.urlopen(req, timeout=15) as response:
-                result = json.loads(response.read().decode("utf-8"))
-                content = result["choices"][0]["message"]["content"]
-                
-                match = re.search(r'\{.*\}', content, re.DOTALL)
-                if match:
-                    return json.loads(match.group(0))
-                return json.loads(content)
-        except urllib.error.HTTPError as e:
-            print(f"[LLM ERROR] HTTPError hitting {self.url}: {e.code} {e.reason}", flush=True)
-            try:
-                print(e.read().decode('utf-8'), flush=True)
-            except:
-                pass
-        except Exception as e:
-            print(f"[LLM ERROR] Exception hitting proxy at {self.url}: {e}", flush=True)
+            content = response.choices[0].message.content
             
-        print("[LLM FALLBACK] Returning default response", flush=True)
-        return {"classify": "ham", "priority": "low", "reply": "Thank you for your email. We will process it shortly."}
+            match = re.search(r'\{.*\}', content, re.DOTALL)
+            if match:
+                return json.loads(match.group(0))
+            return json.loads(content)
+        except Exception as e:
+            print(f"[LLM ERROR] Exception during chat.completions.create: {e}", flush=True)
+            print("[LLM FALLBACK] Returning default response", flush=True)
+            return {"classify": "ham", "priority": "low", "reply": "Thank you for your email. We will process it shortly."}
 
 
 # ── Rule-Based Agent ──────────────────────────────────────────────────────────
