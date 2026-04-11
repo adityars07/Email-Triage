@@ -291,9 +291,7 @@ CUSTOM_CSS = """
 """
 
 with gr.Blocks(
-    title="AI Email Triage - OpenEnv",
-    css=CUSTOM_CSS,
-    theme=gr.themes.Soft(primary_hue="blue", secondary_hue="slate"),
+    title="AI Email Triage - OpenEnv"
 ) as demo:
     gr.Markdown(
         "# AI Email Triage & Response Environment\n"
