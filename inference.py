@@ -24,12 +24,23 @@ class LLMAgent:
         self.name = "LLMAgent"
         import os
         from openai import OpenAI
-        self.client = OpenAI(
-            base_url=os.environ["API_BASE_URL"],
-            api_key=os.environ["API_KEY"]
-        )
+        
+        base_url = os.getenv("API_BASE_URL")
+        api_key = os.getenv("API_KEY")
+
+        if not base_url or not api_key:
+            print("[LLM WARNING] API_BASE_URL or API_KEY not found in environment.")
+            print("[LLM WARNING] Ensure these secrets are set in Hugging Face Spaces settings.")
+            # We initialize with placeholders to avoid crashing during class instantiation
+            # The act() method will hit the fallback exception handler if used without keys.
+            self.client = None
+        else:
+            self.client = OpenAI(base_url=base_url, api_key=api_key)
 
     def act(self, observation: Dict) -> Dict[str, str]:
+        if self.client is None:
+            return {"classify": "ham", "priority": "low", "reply": "Thank you for your email. [Agent unconfigured]"}
+
         prompt = f'''You are an AI Email triage agent.
 Read the following email and output a JSON object with three keys:
 1. "classify": either "spam" or "ham"

@@ -6,4 +6,4 @@ COPY . .
 
 RUN pip install --no-cache-dir -e .
 
-CMD ["python", "inference.py"]
+CMD ["python", "app.py"]
