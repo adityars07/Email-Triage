@@ -228,6 +228,11 @@ class RuleBasedAgent:
 
 # ── Evaluation Harness ────────────────────────────────────────────────────────
 
+def clamp_score(score: float) -> float:
+    """Ensure score is strictly between 0 and 1 (exclusive)."""
+    epsilon = 1e-6
+    return max(epsilon, min(1.0 - epsilon, float(score)))
+
 def run_evaluation(
     agent,
     env: EmailTriageEnv,
@@ -261,8 +266,9 @@ def run_evaluation(
         action = agent.act(obs)
         obs_next, reward, done, info = env.step(action)
 
-        print(f"[STEP] step=1 reward={reward}", flush=True)
-        print(f"[END] task={task_name} score={reward} steps=1", flush=True)
+        clamped = clamp_score(reward)
+        print(f"[STEP] step=1 reward={clamped}", flush=True)
+        print(f"[END] task={task_name} score={clamped} steps=1", flush=True)
 
         result = {
             "episode": ep + 1,
