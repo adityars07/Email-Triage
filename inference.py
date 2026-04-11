@@ -37,40 +37,64 @@ class LLMAgent:
         else:
             self.client = OpenAI(base_url=base_url, api_key=api_key)
 
-    def act(self, observation: Dict) -> Dict[str, str]:
+    def act(self, observation: Dict, retry: bool = True) -> Dict[str, str]:
         if self.client is None:
             return {"classify": "ham", "priority": "low", "reply": "Thank you for your email. [Agent unconfigured]"}
 
-        prompt = f'''You are an AI Email triage agent.
-Read the following email and output a JSON object with three keys:
-1. "classify": either "spam" or "ham"
-2. "priority": if ham, assign "low", "medium", "high", or "critical". if spam, assign "none".
-3. "reply": if ham, generate a short professional reply. if spam, return "".
+        prompt = f'''You are an expert AI Email Triage Agent. Your goal is to accurately classify, prioritize, and respond to incoming emails.
 
-Email content:
-Sender: {observation.get('sender')}
-Subject: {observation.get('subject')}
-Body: {observation.get('body')}
+### TASK INSTRUCTIONS:
+1. **Classify**: Determine if the email is "spam" or "ham" (legitimate).
+2. **Priority**: Assign a priority level ("low", "medium", "high", "critical").
+   - **Critical**: System outages, security breaches, or urgent revenue-impacting failures.
+   - **High**: Urgent deadlines, contract cancellations, or important project launches.
+   - **Medium**: General business operations, feedback requests, or scheduled meetings.
+   - **Low**: General updates, thank-you notes, or non-urgent information.
+   - *Note*: If classified as "spam", priority must be "none".
+3. **Reply**: Generate a professional response for "ham" emails.
+   - Must include a professional greeting (e.g., "Hi [Sender],", "Dear [Sender],").
+   - Must include a professional sign-off (e.g., "Best regards,", "Sincerely,").
+   - Must be helpful and concise.
+   - *Note*: If classified as "spam", reply must be "".
 
-Output ONLY valid JSON.'''
+### EMAIL TO PROCESS:
+- **Sender**: {observation.get('sender')}
+- **Subject**: {observation.get('subject')}
+- **Body**: {observation.get('body')}
 
-        import json
-        import re
+### OUTPUT FORMAT:
+Output your reasoning briefly, then provide a JSON object. Ensure the JSON is valid and contains ONLY these keys: "classify", "priority", "reply".
+
+Example JSON:
+{{
+  "classify": "ham",
+  "priority": "medium",
+  "reply": "Dear Sender, \\n\\nThank you for your message. We have received your request and will review it shortly. \\n\\nBest regards, \\nAI Triage Team"
+}}'''
 
         try:
             response = self.client.chat.completions.create(
                 model="gpt-3.5-turbo",
-                messages=[{"role": "user", "content": prompt}],
-                temperature=0.0
+                messages=[
+                    {"role": "system", "content": "You are a precise email triage assistant. Always output valid JSON after your reasoning."},
+                    {"role": "user", "content": prompt}
+                ],
+                temperature=0.1
             )
             content = response.choices[0].message.content
             
+            # Extract JSON from response
             match = re.search(r'\{.*\}', content, re.DOTALL)
             if match:
                 return json.loads(match.group(0))
             return json.loads(content)
+            
         except Exception as e:
-            print(f"[LLM ERROR] Exception during chat.completions.create: {e}", flush=True)
+            print(f"[LLM ERROR] Try 1 failed: {e}", flush=True)
+            if retry:
+                print("[LLM RETRY] Retrying with stricter instructions...", flush=True)
+                return self.act(observation, retry=False)
+            
             print("[LLM FALLBACK] Returning default response", flush=True)
             return {"classify": "ham", "priority": "low", "reply": "Thank you for your email. We will process it shortly."}
 
@@ -100,21 +124,22 @@ SPAM_SENDER_PATTERNS = [
 
 URGENCY_KEYWORDS = {
     "critical": [
-        "critical", "down", "outage", "breach", "failure",
+        "critical", "down", "outage", "breach", "failure", "emergency",
         "unreachable", "500 error", "security breach", "data exposed",
-        "payment.*fail", "emergency", "immediately", "ASAP",
-        "revenue impact", "regulatory deadline",
+        "payment.*fail", "billing failure", "immediately", "ASAP",
+        "revenue impact", "regulatory deadline", "hacked", "stolen",
+        "incident", "production", "live", "db down",
     ],
     "high": [
-        "urgent", "escalation", "cancel contract", "deadline",
+        "urgent", "escalation", "cancel contract", "deadline", "important",
         "threatening", "resignation", "launch", "approval needed",
-        "vulnerability", "CVE", "critical bug", "investment",
-        "term sheet", "press release", "downtime window",
+        "vulnerability", "CVE", "critical bug", "investment", "legal",
+        "term sheet", "press release", "downtime window", "overdue",
     ],
     "medium": [
-        "review", "feedback", "meeting", "sprint", "update",
+        "review", "feedback", "meeting", "sprint", "update", "task",
         "workshop", "report", "performance review", "pull request",
-        "documentation", "quarterly", "mentor", "KPI",
+        "documentation", "quarterly", "mentor", "KPI", "question",
     ],
 }
 
