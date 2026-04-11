@@ -349,6 +349,7 @@ class EmailTriageGrader:
         else:
             breakdown["reply"] = {"reward": 0.0, "note": "Not attempted"}
 
-        total = round(total, 4)
+        epsilon = 1e-6
+        total = max(epsilon, min(1.0 - epsilon, round(total, 4)))
         breakdown["total_reward"] = total
         return total, breakdown
