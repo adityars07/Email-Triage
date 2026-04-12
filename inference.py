@@ -25,8 +25,9 @@ class LLMAgent:
         import os
         from openai import OpenAI
         
-        base_url = os.getenv("API_BASE_URL")
-        api_key = os.getenv("API_KEY")
+        # Best practice: Load from environment variables (Secrets in Hugging Face)
+        base_url = os.getenv("API_BASE_URL", "https://api.openai.com/v1")
+        api_key = os.getenv("API_KEY") 
 
         if not base_url or not api_key:
             print("[LLM WARNING] API_BASE_URL or API_KEY not found in environment.")
@@ -41,45 +42,57 @@ class LLMAgent:
         if self.client is None:
             return {"classify": "ham", "priority": "low", "reply": "Thank you for your email. [Agent unconfigured]"}
 
-        prompt = f'''You are an expert AI Email Triage Agent. Your goal is to accurately classify, prioritize, and respond to incoming emails.
+        prompt = f'''You are a Senior AI Email Triage Specialist. Your responses are graded on accuracy, professional formatting, and technical helpfulness.
 
-### TASK INSTRUCTIONS:
-1. **Classify**: Determine if the email is "spam" or "ham" (legitimate).
-2. **Priority**: Assign a priority level ("low", "medium", "high", "critical").
-   - **Critical**: System outages, security breaches, or urgent revenue-impacting failures.
-   - **High**: Urgent deadlines, contract cancellations, or important project launches.
-   - **Medium**: General business operations, feedback requests, or scheduled meetings.
-   - **Low**: General updates, thank-you notes, or non-urgent information.
-   - *Note*: If classified as "spam", priority must be "none".
-3. **Reply**: Generate a professional response for "ham" emails.
-   - Must include a professional greeting (e.g., "Hi [Sender],", "Dear [Sender],").
-   - Must include a professional sign-off (e.g., "Best regards,", "Sincerely,").
-   - Must be helpful and concise.
-   - *Note*: If classified as "spam", reply must be "".
+### GRADING RUBRIC (TO COMPLY WITH):
+- **Classification**: Correct "spam" vs "ham" (+1.0)
+- **Priority**: Correct assignment (+1.0)
+- **Professionalism**: 
+  - Specific formal Greeting (e.g., "Dear [Sender],") (+0.3)
+  - Formal Sign-off (e.g., "Best regards, [Your Name]") (+0.2)
+  - At least 2 full sentences of helpful content (+0.2)
+- **Similarity**: Your reply should mention specific technical actions related to the subject.
 
-### EMAIL TO PROCESS:
+### EXAMPLES FOR YOUR REFERENCE:
+
+**Example 1: Spam**
+Sender: luck@win.com | Subject: You won $1B! | Body: Click here to claim.
+Output: {{"classify": "spam", "priority": "none", "reply": ""}}
+
+**Example 2: Critical Priority**
+Sender: ops@company.com | Subject: DB Server Down | Body: Prod is failing.
+Output: {{
+  "classify": "ham",
+  "priority": "critical",
+  "reply": "Dear Operations Team, \\n\\nI have received the critical alert regarding the production database outage. I am beginning an immediate investigation into the root cause and will coordinate with the infrastructure team for a manual failover. I will provide a status update every 15 minutes until resolution. \\n\\nBest regards, \\nAI Triage Assistant"
+}}
+
+**Example 3: Medium Priority**
+Sender: hr@company.com | Subject: Performance Reviews | Body: Please submit by Friday.
+Output: {{
+  "classify": "ham",
+  "priority": "medium",
+  "reply": "Hi HR Team, \\n\\nThank you for the reminder regarding the quarterly performance reviews. I have noted the Friday deadline and will ensure all direct report evaluations are submitted via the portal on time. \\n\\nSincerely, \\nAI Triage Assistant"
+}}
+
+### CURRENT EMAIL TO PROCESS:
 - **Sender**: {observation.get('sender')}
 - **Subject**: {observation.get('subject')}
 - **Body**: {observation.get('body')}
 
 ### OUTPUT FORMAT:
-Output your reasoning briefly, then provide a JSON object. Ensure the JSON is valid and contains ONLY these keys: "classify", "priority", "reply".
+Output your reasoning briefly, then provide the final JSON object. Ensure the JSON is valid and contains ONLY these keys: "classify", "priority", "reply".
 
-Example JSON:
-{{
-  "classify": "ham",
-  "priority": "medium",
-  "reply": "Dear Sender, \\n\\nThank you for your message. We have received your request and will review it shortly. \\n\\nBest regards, \\nAI Triage Team"
-}}'''
+JSON:'''
 
         try:
             response = self.client.chat.completions.create(
-                model="gpt-3.5-turbo",
+                model="gpt-4o", # Upgraded to gpt-4o for better instruction following
                 messages=[
                     {"role": "system", "content": "You are a precise email triage assistant. Always output valid JSON after your reasoning."},
                     {"role": "user", "content": prompt}
                 ],
-                temperature=0.1
+                temperature=0.0
             )
             content = response.choices[0].message.content
             
@@ -145,23 +158,30 @@ URGENCY_KEYWORDS = {
 
 REPLY_TEMPLATES = {
     "critical": (
-        "Acknowledged — this is top priority. I'm taking immediate action "
-        "and will provide a status update within 15 minutes. "
-        "I'll coordinate with the relevant teams right away."
+        "Dear Team,\n\nI have received the critical alert and am prioritizing this immediately. "
+        "I am initiating an emergency investigation and will coordinate with all relevant "
+        "stakeholders for a rapid resolution. I will provide status updates "
+        "every 15 minutes until this is resolved.\n\n"
+        "Best regards,\nAI Triage Assistant"
     ),
     "high": (
-        "Thank you for flagging this. I'll prioritize this and address it "
-        "promptly. I'll review the details and provide my response by "
-        "end of day. Let's schedule a follow-up if needed."
+        "Hello,\n\nThank you for flagging this high-priority issue. I have reviewed the "
+        "details and am assigning the necessary resources to address this urgently. "
+        "I will ensure we meet the current deadlines and provide an update on our "
+        "progress by end of day.\n\n"
+        "Sincerely,\nAI Triage Assistant"
     ),
     "medium": (
-        "Thanks for the update. I'll review this and follow up with my "
-        "input within the next few days. Please let me know if anything "
-        "changes in the meantime."
+        "Hi,\n\nThanks for reaching out with this update. I have received the information "
+        "and will review it in detail during my next scheduled task block. "
+        "I'll follow up with any questions or feedback within the next 48 hours.\n\n"
+        "Best regards,\nAI Triage Assistant"
     ),
     "low": (
-        "Thanks for sharing! Noted — I'll take a look when I have a chance. "
-        "Appreciate the heads up."
+        "Hi there,\n\nThank you for sharing this information with me! I have noted the "
+        "details for future reference and will take any necessary actions when my "
+        "current high-priority tasks are completed. I appreciate the heads-up.\n\n"
+        "Best regards,\nAI Triage Assistant"
     ),
 }
 

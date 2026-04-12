@@ -1,0 +1,1398 @@
+{
+  "metrics": {
+    "total_episodes": 50,
+    "total_reward": 30.9056,
+    "avg_reward": 0.6181,
+    "classification_accuracy": 0.96,
+    "priority_accuracy": 0.6286,
+    "avg_reply_score": 0.1387,
+    "num_emails_in_pool": 50
+  },
+  "per_episode": [
+    {
+      "episode": 1,
+      "email_id": "low-002",
+      "reward": 0.796,
+      "info": {
+        "classification": {
+          "correct": true,
+          "predicted": "ham",
+          "actual": "ham",
+          "reward": 0.4
+        },
+        "priority": {
+          "correct": true,
+          "predicted": "low",
+          "actual": "low",
+          "reward": 0.3
+        },
+        "reply": {
+          "reward": 0.096,
+          "similarity": 0.0,
+          "length_score": 0.1,
+          "professionalism_score": 1.0,
+          "generated_preview": "Hi there,\n\nThank you for sharing this information with me! I have noted the details for future refer..."
+        },
+        "step_reward": 0.796,
+        "episode_reward": 0.796
+      }
+    },
+    {
+      "episode": 2,
+      "email_id": "crit-002",
+      "reward": 0.8473,
+      "info": {
+        "classification": {
+          "correct": true,
+          "predicted": "ham",
+          "actual": "ham",
+          "reward": 0.4
+        },
+        "priority": {
+          "correct": true,
+          "predicted": "critical",
+          "actual": "critical",
+          "reward": 0.3
+        },
+        "reply": {
+          "reward": 0.1473,
+          "similarity": 0.0661,
+          "length_score": 0.7905,
+          "professionalism_score": 1.0,
+          "generated_preview": "Dear Team,\n\nI have received the critical alert and am prioritizing this immediately. I am initiating..."
+        },
+        "step_reward": 0.8473,
+        "episode_reward": 0.8473
+      }
+    },
+    {
+      "episode": 3,
+      "email_id": "high-003",
+      "reward": 0.699,
+      "info": {
+        "classification": {
+          "correct": true,
+          "predicted": "ham",
+          "actual": "ham",
+          "reward": 0.4
+        },
+        "priority": {
+          "correct": false,
+          "predicted": "critical",
+          "actual": "high",
+          "reward": 0.15,
+          "reason": "Off by one priority level (partial credit)"
+        },
+        "reply": {
+          "reward": 0.149,
+          "similarity": 0.0,
+          "length_score": 0.9828,
+          "professionalism_score": 1.0,
+          "generated_preview": "Dear Team,\n\nI have received the critical alert and am prioritizing this immediately. I am initiating..."
+        },
+        "step_reward": 0.699,
+        "episode_reward": 0.699
+      }
+    },
+    {
+      "episode": 4,
+      "email_id": "spam-014",
+      "reward": 0.4,
+      "info": {
+        "classification": {
+          "correct": true,
+          "predicted": "spam",
+          "actual": "spam",
+          "reward": 0.4
+        },
+        "priority": {
+          "correct": true,
+          "predicted": "none",
+          "actual": "none",
+          "reward": 0.0,
+          "note": "Spam email \u2014 priority not applicable"
+        },
+        "reply": {
+          "reward": 0.0,
+          "note": "Spam email \u2014 no reply expected (correct)"
+        },
+        "step_reward": 0.4,
+        "episode_reward": 0.4
+      }
+    },
+    {
+      "episode": 5,
+      "email_id": "low-001",
+      "reward": 0.6682,
+      "info": {
+        "classification": {
+          "correct": true,
+          "predicted": "ham",
+          "actual": "ham",
+          "reward": 0.4
+        },
+        "priority": {
+          "correct": false,
+          "predicted": "medium",
+          "actual": "low",
+          "reward": 0.15,
+          "reason": "Off by one priority level (partial credit)"
+        },
+        "reply": {
+          "reward": 0.1182,
+          "similarity": 0.0682,
+          "length_score": 0.3,
+          "professionalism_score": 1.0,
+          "generated_preview": "Hi,\n\nThanks for reaching out with this update. I have received the information and will review it in..."
+        },
+        "step_reward": 0.6682,
+        "episode_reward": 0.6682
+      }
+    },
+    {
+      "episode": 6,
+      "email_id": "spam-007",
+      "reward": 0.4,
+      "info": {
+        "classification": {
+          "correct": true,
+          "predicted": "spam",
+          "actual": "spam",
+          "reward": 0.4
+        },
+        "priority": {
+          "correct": true,
+          "predicted": "none",
+          "actual": "none",
+          "reward": 0.0,
+          "note": "Spam email \u2014 priority not applicable"
+        },
+        "reply": {
+          "reward": 0.0,
+          "note": "Spam email \u2014 no reply expected (correct)"
+        },
+        "step_reward": 0.4,
+        "episode_reward": 0.4
+      }
+    },
+    {
+      "episode": 7,
+      "email_id": "med-004",
+      "reward": 0.8484,
+      "info": {
+        "classification": {
+          "correct": true,
+          "predicted": "ham",
+          "actual": "ham",
+          "reward": 0.4
+        },
+        "priority": {
+          "correct": true,
+          "predicted": "medium",
+          "actual": "medium",
+          "reward": 0.3
+        },
+        "reply": {
+          "reward": 0.1484,
+          "similarity": 0.0566,
+          "length_score": 0.8322,
+          "professionalism_score": 1.0,
+          "generated_preview": "Hi,\n\nThanks for reaching out with this update. I have received the information and will review it in..."
+        },
+        "step_reward": 0.8484,
+        "episode_reward": 0.8484
+      }
+    },
+    {
+      "episode": 8,
+      "email_id": "crit-003",
+      "reward": 0.3101,
+      "info": {
+        "classification": {
+          "correct": true,
+          "predicted": "ham",
+          "actual": "ham",
+          "reward": 0.4
+        },
+        "priority": {
+          "correct": false,
+          "predicted": "medium",
+          "actual": "critical",
+          "reward": -0.25,
+          "reason": "Missed critical priority \u2014 dangerous underestimation"
+        },
+        "reply": {
+          "reward": 0.1601,
+          "similarity": 0.0715,
+          "length_score": 0.9888,
+          "professionalism_score": 1.0,
+          "generated_preview": "Hi,\n\nThanks for reaching out with this update. I have received the information and will review it in..."
+        },
+        "step_reward": 0.3101,
+        "episode_reward": 0.3101
+      }
+    },
+    {
+      "episode": 9,
+      "email_id": "high-006",
+      "reward": 0.7019,
+      "info": {
+        "classification": {
+          "correct": true,
+          "predicted": "ham",
+          "actual": "ham",
+          "reward": 0.4
+        },
+        "priority": {
+          "correct": false,
+          "predicted": "critical",
+          "actual": "high",
+          "reward": 0.15,
+          "reason": "Off by one priority level (partial credit)"
+        },
+        "reply": {
+          "reward": 0.1519,
+          "similarity": 0.0198,
+          "length_score": 0.9828,
+          "professionalism_score": 1.0,
+          "generated_preview": "Dear Team,\n\nI have received the critical alert and am prioritizing this immediately. I am initiating..."
+        },
+        "step_reward": 0.7019,
+        "episode_reward": 0.7019
+      }
+    },
+    {
+      "episode": 10,
+      "email_id": "high-009",
+      "reward": 0.8536,
+      "info": {
+        "classification": {
+          "correct": true,
+          "predicted": "ham",
+          "actual": "ham",
+          "reward": 0.4
+        },
+        "priority": {
+          "correct": true,
+          "predicted": "high",
+          "actual": "high",
+          "reward": 0.3
+        },
+        "reply": {
+          "reward": 0.1536,
+          "similarity": 0.0491,
+          "length_score": 0.9376,
+          "professionalism_score": 1.0,
+          "generated_preview": "Hello,\n\nThank you for flagging this high-priority issue. I have reviewed the details and am assignin..."
+        },
+        "step_reward": 0.8536,
+        "episode_reward": 0.8536
+      }
+    },
+    {
+      "episode": 11,
+      "email_id": "low-008",
+      "reward": 0.8236,
+      "info": {
+        "classification": {
+          "correct": true,
+          "predicted": "ham",
+          "actual": "ham",
+          "reward": 0.4
+        },
+        "priority": {
+          "correct": true,
+          "predicted": "low",
+          "actual": "low",
+          "reward": 0.3
+        },
+        "reply": {
+          "reward": 0.1236,
+          "similarity": 0.0,
+          "length_score": 0.56,
+          "professionalism_score": 1.0,
+          "generated_preview": "Hi there,\n\nThank you for sharing this information with me! I have noted the details for future refer..."
+        },
+        "step_reward": 0.8236,
+        "episode_reward": 0.8236
+      }
+    },
+    {
+      "episode": 12,
+      "email_id": "crit-001",
+      "reward": 0.8375,
+      "info": {
+        "classification": {
+          "correct": true,
+          "predicted": "ham",
+          "actual": "ham",
+          "reward": 0.4
+        },
+        "priority": {
+          "correct": true,
+          "predicted": "critical",
+          "actual": "critical",
+          "reward": 0.3
+        },
+        "reply": {
+          "reward": 0.1375,
+          "similarity": 0.1835,
+          "length_score": 0.3337,
+          "professionalism_score": 1.0,
+          "generated_preview": "Dear Team,\n\nI have received the critical alert and am prioritizing this immediately. I am initiating..."
+        },
+        "step_reward": 0.8375,
+        "episode_reward": 0.8375
+      }
+    },
+    {
+      "episode": 13,
+      "email_id": "spam-003",
+      "reward": 0.4,
+      "info": {
+        "classification": {
+          "correct": true,
+          "predicted": "spam",
+          "actual": "spam",
+          "reward": 0.4
+        },
+        "priority": {
+          "correct": true,
+          "predicted": "none",
+          "actual": "none",
+          "reward": 0.0,
+          "note": "Spam email \u2014 priority not applicable"
+        },
+        "reply": {
+          "reward": 0.0,
+          "note": "Spam email \u2014 no reply expected (correct)"
+        },
+        "step_reward": 0.4,
+        "episode_reward": 0.4
+      }
+    },
+    {
+      "episode": 14,
+      "email_id": "med-009",
+      "reward": 0.8399,
+      "info": {
+        "classification": {
+          "correct": true,
+          "predicted": "ham",
+          "actual": "ham",
+          "reward": 0.4
+        },
+        "priority": {
+          "correct": true,
+          "predicted": "medium",
+          "actual": "medium",
+          "reward": 0.3
+        },
+        "reply": {
+          "reward": 0.1399,
+          "similarity": 0.0,
+          "length_score": 0.8322,
+          "professionalism_score": 1.0,
+          "generated_preview": "Hi,\n\nThanks for reaching out with this update. I have received the information and will review it in..."
+        },
+        "step_reward": 0.8399,
+        "episode_reward": 0.8399
+      }
+    },
+    {
+      "episode": 15,
+      "email_id": "spam-006",
+      "reward": 0.4,
+      "info": {
+        "classification": {
+          "correct": true,
+          "predicted": "spam",
+          "actual": "spam",
+          "reward": 0.4
+        },
+        "priority": {
+          "correct": true,
+          "predicted": "none",
+          "actual": "none",
+          "reward": 0.0,
+          "note": "Spam email \u2014 priority not applicable"
+        },
+        "reply": {
+          "reward": 0.0,
+          "note": "Spam email \u2014 no reply expected (correct)"
+        },
+        "step_reward": 0.4,
+        "episode_reward": 0.4
+      }
+    },
+    {
+      "episode": 16,
+      "email_id": "spam-015",
+      "reward": 0.4,
+      "info": {
+        "classification": {
+          "correct": true,
+          "predicted": "spam",
+          "actual": "spam",
+          "reward": 0.4
+        },
+        "priority": {
+          "correct": true,
+          "predicted": "none",
+          "actual": "none",
+          "reward": 0.0,
+          "note": "Spam email \u2014 priority not applicable"
+        },
+        "reply": {
+          "reward": 0.0,
+          "note": "Spam email \u2014 no reply expected (correct)"
+        },
+        "step_reward": 0.4,
+        "episode_reward": 0.4
+      }
+    },
+    {
+      "episode": 17,
+      "email_id": "low-010",
+      "reward": 0.6629,
+      "info": {
+        "classification": {
+          "correct": true,
+          "predicted": "ham",
+          "actual": "ham",
+          "reward": 0.4
+        },
+        "priority": {
+          "correct": false,
+          "predicted": "medium",
+          "actual": "low",
+          "reward": 0.15,
+          "reason": "Off by one priority level (partial credit)"
+        },
+        "reply": {
+          "reward": 0.1129,
+          "similarity": 0.033,
+          "length_score": 0.3,
+          "professionalism_score": 1.0,
+          "generated_preview": "Hi,\n\nThanks for reaching out with this update. I have received the information and will review it in..."
+        },
+        "step_reward": 0.6629,
+        "episode_reward": 0.6629
+      }
+    },
+    {
+      "episode": 18,
+      "email_id": "spam-002",
+      "reward": 0.4,
+      "info": {
+        "classification": {
+          "correct": true,
+          "predicted": "spam",
+          "actual": "spam",
+          "reward": 0.4
+        },
+        "priority": {
+          "correct": true,
+          "predicted": "none",
+          "actual": "none",
+          "reward": 0.0,
+          "note": "Spam email \u2014 priority not applicable"
+        },
+        "reply": {
+          "reward": 0.0,
+          "note": "Spam email \u2014 no reply expected (correct)"
+        },
+        "step_reward": 0.4,
+        "episode_reward": 0.4
+      }
+    },
+    {
+      "episode": 19,
+      "email_id": "high-010",
+      "reward": 0.712,
+      "info": {
+        "classification": {
+          "correct": true,
+          "predicted": "ham",
+          "actual": "ham",
+          "reward": 0.4
+        },
+        "priority": {
+          "correct": false,
+          "predicted": "medium",
+          "actual": "high",
+          "reward": 0.15,
+          "reason": "Off by one priority level (partial credit)"
+        },
+        "reply": {
+          "reward": 0.162,
+          "similarity": 0.0881,
+          "length_score": 0.9792,
+          "professionalism_score": 1.0,
+          "generated_preview": "Hi,\n\nThanks for reaching out with this update. I have received the information and will review it in..."
+        },
+        "step_reward": 0.712,
+        "episode_reward": 0.712
+      }
+    },
+    {
+      "episode": 20,
+      "email_id": "spam-001",
+      "reward": 0.4,
+      "info": {
+        "classification": {
+          "correct": true,
+          "predicted": "spam",
+          "actual": "spam",
+          "reward": 0.4
+        },
+        "priority": {
+          "correct": true,
+          "predicted": "none",
+          "actual": "none",
+          "reward": 0.0,
+          "note": "Spam email \u2014 priority not applicable"
+        },
+        "reply": {
+          "reward": 0.0,
+          "note": "Spam email \u2014 no reply expected (correct)"
+        },
+        "step_reward": 0.4,
+        "episode_reward": 0.4
+      }
+    },
+    {
+      "episode": 21,
+      "email_id": "low-003",
+      "reward": 0.8029,
+      "info": {
+        "classification": {
+          "correct": true,
+          "predicted": "ham",
+          "actual": "ham",
+          "reward": 0.4
+        },
+        "priority": {
+          "correct": true,
+          "predicted": "low",
+          "actual": "low",
+          "reward": 0.3
+        },
+        "reply": {
+          "reward": 0.1029,
+          "similarity": 0.0322,
+          "length_score": 0.1353,
+          "professionalism_score": 1.0,
+          "generated_preview": "Hi there,\n\nThank you for sharing this information with me! I have noted the details for future refer..."
+        },
+        "step_reward": 0.8029,
+        "episode_reward": 0.8029
+      }
+    },
+    {
+      "episode": 22,
+      "email_id": "med-008",
+      "reward": 0.8478,
+      "info": {
+        "classification": {
+          "correct": true,
+          "predicted": "ham",
+          "actual": "ham",
+          "reward": 0.4
+        },
+        "priority": {
+          "correct": true,
+          "predicted": "medium",
+          "actual": "medium",
+          "reward": 0.3
+        },
+        "reply": {
+          "reward": 0.1478,
+          "similarity": 0.0247,
+          "length_score": 0.9008,
+          "professionalism_score": 1.0,
+          "generated_preview": "Hi,\n\nThanks for reaching out with this update. I have received the information and will review it in..."
+        },
+        "step_reward": 0.8478,
+        "episode_reward": 0.8478
+      }
+    },
+    {
+      "episode": 23,
+      "email_id": "spam-011",
+      "reward": 0.4,
+      "info": {
+        "classification": {
+          "correct": true,
+          "predicted": "spam",
+          "actual": "spam",
+          "reward": 0.4
+        },
+        "priority": {
+          "correct": true,
+          "predicted": "none",
+          "actual": "none",
+          "reward": 0.0,
+          "note": "Spam email \u2014 priority not applicable"
+        },
+        "reply": {
+          "reward": 0.0,
+          "note": "Spam email \u2014 no reply expected (correct)"
+        },
+        "step_reward": 0.4,
+        "episode_reward": 0.4
+      }
+    },
+    {
+      "episode": 24,
+      "email_id": "high-008",
+      "reward": 0.6918,
+      "info": {
+        "classification": {
+          "correct": true,
+          "predicted": "ham",
+          "actual": "ham",
+          "reward": 0.4
+        },
+        "priority": {
+          "correct": false,
+          "predicted": "critical",
+          "actual": "high",
+          "reward": 0.15,
+          "reason": "Off by one priority level (partial credit)"
+        },
+        "reply": {
+          "reward": 0.1418,
+          "similarity": 0.0,
+          "length_score": 0.8641,
+          "professionalism_score": 1.0,
+          "generated_preview": "Dear Team,\n\nI have received the critical alert and am prioritizing this immediately. I am initiating..."
+        },
+        "step_reward": 0.6918,
+        "episode_reward": 0.6918
+      }
+    },
+    {
+      "episode": 25,
+      "email_id": "low-006",
+      "reward": 0.796,
+      "info": {
+        "classification": {
+          "correct": true,
+          "predicted": "ham",
+          "actual": "ham",
+          "reward": 0.4
+        },
+        "priority": {
+          "correct": true,
+          "predicted": "low",
+          "actual": "low",
+          "reward": 0.3
+        },
+        "reply": {
+          "reward": 0.096,
+          "similarity": 0.0,
+          "length_score": 0.1,
+          "professionalism_score": 1.0,
+          "generated_preview": "Hi there,\n\nThank you for sharing this information with me! I have noted the details for future refer..."
+        },
+        "step_reward": 0.796,
+        "episode_reward": 0.796
+      }
+    },
+    {
+      "episode": 26,
+      "email_id": "med-005",
+      "reward": 0.8507,
+      "info": {
+        "classification": {
+          "correct": true,
+          "predicted": "ham",
+          "actual": "ham",
+          "reward": 0.4
+        },
+        "priority": {
+          "correct": true,
+          "predicted": "medium",
+          "actual": "medium",
+          "reward": 0.3
+        },
+        "reply": {
+          "reward": 0.1507,
+          "similarity": 0.0715,
+          "length_score": 0.8322,
+          "professionalism_score": 1.0,
+          "generated_preview": "Hi,\n\nThanks for reaching out with this update. I have received the information and will review it in..."
+        },
+        "step_reward": 0.8507,
+        "episode_reward": 0.8507
+      }
+    },
+    {
+      "episode": 27,
+      "email_id": "med-002",
+      "reward": 0.836,
+      "info": {
+        "classification": {
+          "correct": true,
+          "predicted": "ham",
+          "actual": "ham",
+          "reward": 0.4
+        },
+        "priority": {
+          "correct": true,
+          "predicted": "medium",
+          "actual": "medium",
+          "reward": 0.3
+        },
+        "reply": {
+          "reward": 0.136,
+          "similarity": 0.0316,
+          "length_score": 0.6869,
+          "professionalism_score": 1.0,
+          "generated_preview": "Hi,\n\nThanks for reaching out with this update. I have received the information and will review it in..."
+        },
+        "step_reward": 0.836,
+        "episode_reward": 0.836
+      }
+    },
+    {
+      "episode": 28,
+      "email_id": "high-005",
+      "reward": 0.4056,
+      "info": {
+        "classification": {
+          "correct": true,
+          "predicted": "ham",
+          "actual": "ham",
+          "reward": 0.4
+        },
+        "priority": {
+          "correct": false,
+          "predicted": "low",
+          "actual": "high",
+          "reward": -0.15,
+          "reason": "Priority mismatch (off by 2 levels)"
+        },
+        "reply": {
+          "reward": 0.1556,
+          "similarity": 0.041,
+          "length_score": 0.9903,
+          "professionalism_score": 1.0,
+          "generated_preview": "Hi there,\n\nThank you for sharing this information with me! I have noted the details for future refer..."
+        },
+        "step_reward": 0.4056,
+        "episode_reward": 0.4056
+      }
+    },
+    {
+      "episode": 29,
+      "email_id": "med-006",
+      "reward": 0.8534,
+      "info": {
+        "classification": {
+          "correct": true,
+          "predicted": "ham",
+          "actual": "ham",
+          "reward": 0.4
+        },
+        "priority": {
+          "correct": true,
+          "predicted": "medium",
+          "actual": "medium",
+          "reward": 0.3
+        },
+        "reply": {
+          "reward": 0.1534,
+          "similarity": 0.0749,
+          "length_score": 0.8692,
+          "professionalism_score": 1.0,
+          "generated_preview": "Hi,\n\nThanks for reaching out with this update. I have received the information and will review it in..."
+        },
+        "step_reward": 0.8534,
+        "episode_reward": 0.8534
+      }
+    },
+    {
+      "episode": 30,
+      "email_id": "spam-010",
+      "reward": 0.4,
+      "info": {
+        "classification": {
+          "correct": true,
+          "predicted": "spam",
+          "actual": "spam",
+          "reward": 0.4
+        },
+        "priority": {
+          "correct": true,
+          "predicted": "none",
+          "actual": "none",
+          "reward": 0.0,
+          "note": "Spam email \u2014 priority not applicable"
+        },
+        "reply": {
+          "reward": 0.0,
+          "note": "Spam email \u2014 no reply expected (correct)"
+        },
+        "step_reward": 0.4,
+        "episode_reward": 0.4
+      }
+    },
+    {
+      "episode": 31,
+      "email_id": "high-004",
+      "reward": 0.7088,
+      "info": {
+        "classification": {
+          "correct": true,
+          "predicted": "ham",
+          "actual": "ham",
+          "reward": 0.4
+        },
+        "priority": {
+          "correct": false,
+          "predicted": "medium",
+          "actual": "high",
+          "reward": 0.15,
+          "reason": "Off by one priority level (partial credit)"
+        },
+        "reply": {
+          "reward": 0.1588,
+          "similarity": 0.0789,
+          "length_score": 0.9488,
+          "professionalism_score": 1.0,
+          "generated_preview": "Hi,\n\nThanks for reaching out with this update. I have received the information and will review it in..."
+        },
+        "step_reward": 0.7088,
+        "episode_reward": 0.7088
+      }
+    },
+    {
+      "episode": 32,
+      "email_id": "high-002",
+      "reward": 0.7027,
+      "info": {
+        "classification": {
+          "correct": true,
+          "predicted": "ham",
+          "actual": "ham",
+          "reward": 0.4
+        },
+        "priority": {
+          "correct": false,
+          "predicted": "critical",
+          "actual": "high",
+          "reward": 0.15,
+          "reason": "Off by one priority level (partial credit)"
+        },
+        "reply": {
+          "reward": 0.1527,
+          "similarity": 0.0607,
+          "length_score": 0.8939,
+          "professionalism_score": 1.0,
+          "generated_preview": "Dear Team,\n\nI have received the critical alert and am prioritizing this immediately. I am initiating..."
+        },
+        "step_reward": 0.7027,
+        "episode_reward": 0.7027
+      }
+    },
+    {
+      "episode": 33,
+      "email_id": "high-001",
+      "reward": 0.8495,
+      "info": {
+        "classification": {
+          "correct": true,
+          "predicted": "ham",
+          "actual": "ham",
+          "reward": 0.4
+        },
+        "priority": {
+          "correct": true,
+          "predicted": "high",
+          "actual": "high",
+          "reward": 0.3
+        },
+        "reply": {
+          "reward": 0.1495,
+          "similarity": 0.0413,
+          "length_score": 0.8884,
+          "professionalism_score": 1.0,
+          "generated_preview": "Hello,\n\nThank you for flagging this high-priority issue. I have reviewed the details and am assignin..."
+        },
+        "step_reward": 0.8495,
+        "episode_reward": 0.8495
+      }
+    },
+    {
+      "episode": 34,
+      "email_id": "med-007",
+      "reward": 0.6648,
+      "info": {
+        "classification": {
+          "correct": true,
+          "predicted": "ham",
+          "actual": "ham",
+          "reward": 0.4
+        },
+        "priority": {
+          "correct": false,
+          "predicted": "low",
+          "actual": "medium",
+          "reward": 0.15,
+          "reason": "Off by one priority level (partial credit)"
+        },
+        "reply": {
+          "reward": 0.1148,
+          "similarity": 0.0309,
+          "length_score": 0.3353,
+          "professionalism_score": 1.0,
+          "generated_preview": "Hi there,\n\nThank you for sharing this information with me! I have noted the details for future refer..."
+        },
+        "step_reward": 0.6648,
+        "episode_reward": 0.6648
+      }
+    },
+    {
+      "episode": 35,
+      "email_id": "low-007",
+      "reward": 0.8146,
+      "info": {
+        "classification": {
+          "correct": true,
+          "predicted": "ham",
+          "actual": "ham",
+          "reward": 0.4
+        },
+        "priority": {
+          "correct": true,
+          "predicted": "low",
+          "actual": "low",
+          "reward": 0.3
+        },
+        "reply": {
+          "reward": 0.1146,
+          "similarity": 0.0297,
+          "length_score": 0.3353,
+          "professionalism_score": 1.0,
+          "generated_preview": "Hi there,\n\nThank you for sharing this information with me! I have noted the details for future refer..."
+        },
+        "step_reward": 0.8146,
+        "episode_reward": 0.8146
+      }
+    },
+    {
+      "episode": 36,
+      "email_id": "spam-005",
+      "reward": -0.3,
+      "info": {
+        "classification": {
+          "correct": false,
+          "predicted": "ham",
+          "actual": "spam",
+          "reward": -0.2,
+          "reason": "Misclassified spam as legitimate (lets spam through)"
+        },
+        "priority": {
+          "correct": false,
+          "predicted": "low",
+          "actual": "none",
+          "reward": 0.0,
+          "note": "Spam email \u2014 priority not applicable, no penalty"
+        },
+        "reply": {
+          "reward": -0.1,
+          "reason": "Replied to a spam email \u2014 should not respond"
+        },
+        "step_reward": -0.3,
+        "episode_reward": -0.3
+      }
+    },
+    {
+      "episode": 37,
+      "email_id": "spam-012",
+      "reward": -0.3,
+      "info": {
+        "classification": {
+          "correct": false,
+          "predicted": "ham",
+          "actual": "spam",
+          "reward": -0.2,
+          "reason": "Misclassified spam as legitimate (lets spam through)"
+        },
+        "priority": {
+          "correct": false,
+          "predicted": "low",
+          "actual": "none",
+          "reward": 0.0,
+          "note": "Spam email \u2014 priority not applicable, no penalty"
+        },
+        "reply": {
+          "reward": -0.1,
+          "reason": "Replied to a spam email \u2014 should not respond"
+        },
+        "step_reward": -0.3,
+        "episode_reward": -0.3
+      }
+    },
+    {
+      "episode": 38,
+      "email_id": "low-004",
+      "reward": 0.8125,
+      "info": {
+        "classification": {
+          "correct": true,
+          "predicted": "ham",
+          "actual": "ham",
+          "reward": 0.4
+        },
+        "priority": {
+          "correct": true,
+          "predicted": "low",
+          "actual": "low",
+          "reward": 0.3
+        },
+        "reply": {
+          "reward": 0.1125,
+          "similarity": 0.1103,
+          "length_score": 0.1,
+          "professionalism_score": 1.0,
+          "generated_preview": "Hi there,\n\nThank you for sharing this information with me! I have noted the details for future refer..."
+        },
+        "step_reward": 0.8125,
+        "episode_reward": 0.8125
+      }
+    },
+    {
+      "episode": 39,
+      "email_id": "spam-009",
+      "reward": 0.4,
+      "info": {
+        "classification": {
+          "correct": true,
+          "predicted": "spam",
+          "actual": "spam",
+          "reward": 0.4
+        },
+        "priority": {
+          "correct": true,
+          "predicted": "none",
+          "actual": "none",
+          "reward": 0.0,
+          "note": "Spam email \u2014 priority not applicable"
+        },
+        "reply": {
+          "reward": 0.0,
+          "note": "Spam email \u2014 no reply expected (correct)"
+        },
+        "step_reward": 0.4,
+        "episode_reward": 0.4
+      }
+    },
+    {
+      "episode": 40,
+      "email_id": "spam-008",
+      "reward": 0.4,
+      "info": {
+        "classification": {
+          "correct": true,
+          "predicted": "spam",
+          "actual": "spam",
+          "reward": 0.4
+        },
+        "priority": {
+          "correct": true,
+          "predicted": "none",
+          "actual": "none",
+          "reward": 0.0,
+          "note": "Spam email \u2014 priority not applicable"
+        },
+        "reply": {
+          "reward": 0.0,
+          "note": "Spam email \u2014 no reply expected (correct)"
+        },
+        "step_reward": 0.4,
+        "episode_reward": 0.4
+      }
+    },
+    {
+      "episode": 41,
+      "email_id": "med-010",
+      "reward": 0.8536,
+      "info": {
+        "classification": {
+          "correct": true,
+          "predicted": "ham",
+          "actual": "ham",
+          "reward": 0.4
+        },
+        "priority": {
+          "correct": true,
+          "predicted": "medium",
+          "actual": "medium",
+          "reward": 0.3
+        },
+        "reply": {
+          "reward": 0.1536,
+          "similarity": 0.1079,
+          "length_score": 0.7895,
+          "professionalism_score": 1.0,
+          "generated_preview": "Hi,\n\nThanks for reaching out with this update. I have received the information and will review it in..."
+        },
+        "step_reward": 0.8536,
+        "episode_reward": 0.8536
+      }
+    },
+    {
+      "episode": 42,
+      "email_id": "spam-004",
+      "reward": 0.4,
+      "info": {
+        "classification": {
+          "correct": true,
+          "predicted": "spam",
+          "actual": "spam",
+          "reward": 0.4
+        },
+        "priority": {
+          "correct": true,
+          "predicted": "none",
+          "actual": "none",
+          "reward": 0.0,
+          "note": "Spam email \u2014 priority not applicable"
+        },
+        "reply": {
+          "reward": 0.0,
+          "note": "Spam email \u2014 no reply expected (correct)"
+        },
+        "step_reward": 0.4,
+        "episode_reward": 0.4
+      }
+    },
+    {
+      "episode": 43,
+      "email_id": "high-007",
+      "reward": 0.8433,
+      "info": {
+        "classification": {
+          "correct": true,
+          "predicted": "ham",
+          "actual": "ham",
+          "reward": 0.4
+        },
+        "priority": {
+          "correct": true,
+          "predicted": "high",
+          "actual": "high",
+          "reward": 0.3
+        },
+        "reply": {
+          "reward": 0.1433,
+          "similarity": 0.0,
+          "length_score": 0.8884,
+          "professionalism_score": 1.0,
+          "generated_preview": "Hello,\n\nThank you for flagging this high-priority issue. I have reviewed the details and am assignin..."
+        },
+        "step_reward": 0.8433,
+        "episode_reward": 0.8433
+      }
+    },
+    {
+      "episode": 44,
+      "email_id": "low-009",
+      "reward": 0.684,
+      "info": {
+        "classification": {
+          "correct": true,
+          "predicted": "ham",
+          "actual": "ham",
+          "reward": 0.4
+        },
+        "priority": {
+          "correct": false,
+          "predicted": "medium",
+          "actual": "low",
+          "reward": 0.15,
+          "reason": "Off by one priority level (partial credit)"
+        },
+        "reply": {
+          "reward": 0.134,
+          "similarity": 0.0682,
+          "length_score": 0.5633,
+          "professionalism_score": 1.0,
+          "generated_preview": "Hi,\n\nThanks for reaching out with this update. I have received the information and will review it in..."
+        },
+        "step_reward": 0.684,
+        "episode_reward": 0.684
+      }
+    },
+    {
+      "episode": 45,
+      "email_id": "med-003",
+      "reward": 0.8524,
+      "info": {
+        "classification": {
+          "correct": true,
+          "predicted": "ham",
+          "actual": "ham",
+          "reward": 0.4
+        },
+        "priority": {
+          "correct": true,
+          "predicted": "medium",
+          "actual": "medium",
+          "reward": 0.3
+        },
+        "reply": {
+          "reward": 0.1524,
+          "similarity": 0.1198,
+          "length_score": 0.741,
+          "professionalism_score": 1.0,
+          "generated_preview": "Hi,\n\nThanks for reaching out with this update. I have received the information and will review it in..."
+        },
+        "step_reward": 0.8524,
+        "episode_reward": 0.8524
+      }
+    },
+    {
+      "episode": 46,
+      "email_id": "med-001",
+      "reward": 0.8535,
+      "info": {
+        "classification": {
+          "correct": true,
+          "predicted": "ham",
+          "actual": "ham",
+          "reward": 0.4
+        },
+        "priority": {
+          "correct": true,
+          "predicted": "medium",
+          "actual": "medium",
+          "reward": 0.3
+        },
+        "reply": {
+          "reward": 0.1535,
+          "similarity": 0.0902,
+          "length_score": 0.8322,
+          "professionalism_score": 1.0,
+          "generated_preview": "Hi,\n\nThanks for reaching out with this update. I have received the information and will review it in..."
+        },
+        "step_reward": 0.8535,
+        "episode_reward": 0.8535
+      }
+    },
+    {
+      "episode": 47,
+      "email_id": "spam-013",
+      "reward": 0.4,
+      "info": {
+        "classification": {
+          "correct": true,
+          "predicted": "spam",
+          "actual": "spam",
+          "reward": 0.4
+        },
+        "priority": {
+          "correct": true,
+          "predicted": "none",
+          "actual": "none",
+          "reward": 0.0,
+          "note": "Spam email \u2014 priority not applicable"
+        },
+        "reply": {
+          "reward": 0.0,
+          "note": "Spam email \u2014 no reply expected (correct)"
+        },
+        "step_reward": 0.4,
+        "episode_reward": 0.4
+      }
+    },
+    {
+      "episode": 48,
+      "email_id": "crit-004",
+      "reward": 0.3236,
+      "info": {
+        "classification": {
+          "correct": true,
+          "predicted": "ham",
+          "actual": "ham",
+          "reward": 0.4
+        },
+        "priority": {
+          "correct": false,
+          "predicted": "medium",
+          "actual": "critical",
+          "reward": -0.25,
+          "reason": "Missed critical priority \u2014 dangerous underestimation"
+        },
+        "reply": {
+          "reward": 0.1736,
+          "similarity": 0.1606,
+          "length_score": 0.9915,
+          "professionalism_score": 1.0,
+          "generated_preview": "Hi,\n\nThanks for reaching out with this update. I have received the information and will review it in..."
+        },
+        "step_reward": 0.3236,
+        "episode_reward": 0.3236
+      }
+    },
+    {
+      "episode": 49,
+      "email_id": "low-005",
+      "reward": 0.808,
+      "info": {
+        "classification": {
+          "correct": true,
+          "predicted": "ham",
+          "actual": "ham",
+          "reward": 0.4
+        },
+        "priority": {
+          "correct": true,
+          "predicted": "low",
+          "actual": "low",
+          "reward": 0.3
+        },
+        "reply": {
+          "reward": 0.108,
+          "similarity": 0.0,
+          "length_score": 0.3,
+          "professionalism_score": 1.0,
+          "generated_preview": "Hi there,\n\nThank you for sharing this information with me! I have noted the details for future refer..."
+        },
+        "step_reward": 0.808,
+        "episode_reward": 0.808
+      }
+    },
+    {
+      "episode": 50,
+      "email_id": "crit-005",
+      "reward": 0.8497,
+      "info": {
+        "classification": {
+          "correct": true,
+          "predicted": "ham",
+          "actual": "ham",
+          "reward": 0.4
+        },
+        "priority": {
+          "correct": true,
+          "predicted": "critical",
+          "actual": "critical",
+          "reward": 0.3
+        },
+        "reply": {
+          "reward": 0.1497,
+          "similarity": 0.0994,
+          "length_score": 0.7465,
+          "professionalism_score": 1.0,
+          "generated_preview": "Dear Team,\n\nI have received the critical alert and am prioritizing this immediately. I am initiating..."
+        },
+        "step_reward": 0.8497,
+        "episode_reward": 0.8497
+      }
+    }
+  ]
+}
